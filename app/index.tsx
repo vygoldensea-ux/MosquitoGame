@@ -8,7 +8,8 @@ import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
 // import { AdMobConfig } from './config/admob';
 import { IAP_PRODUCTS, PACK_DETAILS } from './config/iap';
-
+import analytics from '@react-native-firebase/analytics';
+import crashlytics from '@react-native-firebase/crashlytics';
 // Conditional AdMob component import (web-safe)
 const _admob = Platform.OS !== 'web' ? require('react-native-google-mobile-ads') : null;
 const BannerAd = _admob?.BannerAd ?? (() => null);
@@ -91,6 +92,14 @@ export default function App() {
     //       .catch(error => {
     //         console.error('AdMob initialization error:', error);
     //       });
+  }, []);
+
+  useEffect(() => {
+    analytics().logAppOpen();
+    analytics().logScreenView({
+      screen_name: 'GameScreen',
+      screen_class: 'GameScreen'
+    });
   }, []);
 
   // ═══════════════════════════════════════════════════════════
@@ -185,6 +194,13 @@ export default function App() {
         console.error('Unknown product ID:', productId);
         return;
       }
+
+      analytics().logEvent('purchase', {
+        item_id: productId,
+        item_name: 'Starter Pack',
+        value: 2.99,
+        currency: 'USD'
+      });
 
       // ─────────────────────────────────────────────────────
       // GRANT NO ADS (Permanent)
@@ -1981,6 +1997,12 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
       setKills((prev) => {
         const newKills = prev + 1;
         if (newKills >= TARGET_MOSQUITO) {
+          analytics().logEvent('level_complete', {
+            level: currentLevel,
+            score: newKills,
+            time_spent: 30 - (typeof timeLeft === 'number' ? timeLeft : 0)
+          });
+          analytics().setUserProperty('total_levels_completed', currentLevel.toString());
           playSound('win');
           showInterstitialAd(() => setIsCompleted(true));
         }
@@ -2006,9 +2028,15 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
   const handleBossDefeat = useCallback(() => {
     setBossDefeated(true);
     setEarnedGold(prev => prev + 50); // Màn Boss thưởng nóng 50 Vàng
+    analytics().logEvent('level_complete', {
+      level: currentLevel,
+      score: TARGET_MOSQUITO,
+      time_spent: 30 - (typeof timeLeft === 'number' ? timeLeft : 0)
+    });
+    analytics().setUserProperty('total_levels_completed', currentLevel.toString());
     playSound('win');
     showInterstitialAd(() => setIsCompleted(true));
-  }, [showInterstitialAd]);
+  }, [showInterstitialAd, currentLevel, timeLeft]);
 
   const handleQuitGame = () => {
     decreaseHeart();
@@ -2105,6 +2133,11 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
   };
 
   const onItemPress = (itemName: string) => {
+    analytics().logEvent('item_used', {
+      item_name: itemName,
+      level: currentLevel
+    });
+
     if (inventory && inventory[itemName] > 0) {
       executeItemEffect(itemName);
 
