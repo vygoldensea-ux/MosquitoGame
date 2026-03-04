@@ -42,13 +42,6 @@
           }
         }
       ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-3600965442508079~6379631817",
-          "iosAppId": "ca-app-pub-3600965442508079~2352756891"
-        }
-      ],
       "@react-native-firebase/app",
       "@react-native-firebase/analytics",
       "@react-native-firebase/crashlytics"
