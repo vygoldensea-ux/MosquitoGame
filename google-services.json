@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "617394321159",
+    "project_id": "mosquitogame-f390a",
+    "storage_bucket": "mosquitogame-f390a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617394321159:android:d0324386ffbd60426b37a2",
+        "android_client_info": {
+          "package_name": "com.anonymous.MosquitoGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDr_RgSew78TqaT90j4SLkpK2cyVUn6R4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
