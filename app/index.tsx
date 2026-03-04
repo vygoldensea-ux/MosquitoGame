@@ -6,14 +6,9 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { Audio } from 'expo-av';
 import * as Haptics from 'expo-haptics';
-// import { AdMobConfig } from './config/admob';
 import { IAP_PRODUCTS, PACK_DETAILS } from './config/iap';
 import analytics from '@react-native-firebase/analytics';
 import crashlytics from '@react-native-firebase/crashlytics';
-// Conditional AdMob component import (web-safe)
-const _admob = Platform.OS !== 'web' ? require('react-native-google-mobile-ads') : null;
-const BannerAd = _admob?.BannerAd ?? (() => null);
-const BannerAdSize = _admob?.BannerAdSize ?? { LARGE_BANNER: 'LARGE_BANNER', ANCHORED_ADAPTIVE_BANNER: 'ANCHORED_ADAPTIVE_BANNER' };
 
 const MAX_HEARTS = 5;
 const TIME_PER_HEART = 15 * 60 * 1000;
@@ -1189,18 +1184,17 @@ function ShopModal({ onClose, globalGold, updateGold, equippedSkin, updateSkin, 
 
       </Animated.View>
 
-      {/* ADS BANNER */}
-      {!isNoAdsPurchased && !(typeof window !== 'undefined' && (window as any).__autoTestActive) && (
+      {/* ADS BANNER (AdMob Removed) */}
+      {/* {!isNoAdsPurchased && !(typeof window !== 'undefined' && (window as any).__autoTestActive) && (
         <View style={styles.shopAdsPlaceholder}>
           <BannerAd
-            unitId={AdMobConfig.bannerAdUnitId}
             size={BannerAdSize.LARGE_BANNER}
             requestOptions={{
               requestNonPersonalizedAdsOnly: true,
             }}
           />
         </View>
-      )}
+      )} */}
     </>
   );
 }
@@ -2404,18 +2398,17 @@ function LevelFailedPopup({ onTryAgain, onClose, hearts, onWatchAd, isNoAdsPurch
 
       </Animated.View>
 
-      {/* ADS Banner at the bottom of the overlay */}
-      {!isNoAdsPurchased && !(typeof window !== 'undefined' && (window as any).__autoTestActive) && (
+      {/* ADS Banner at the bottom of the overlay (AdMob Removed) */}
+      {/* {!isNoAdsPurchased && !(typeof window !== 'undefined' && (window as any).__autoTestActive) && (
         <View style={styles.adsPlaceholder}>
           <BannerAd
-            unitId={AdMobConfig.bannerAdUnitId}
             size={BannerAdSize.LARGE_BANNER}
             requestOptions={{
               requestNonPersonalizedAdsOnly: true,
             }}
           />
         </View>
-      )}
+      )} */}
     </View>
   );
 }
@@ -2513,18 +2506,17 @@ function CompletedPopup({ onContinue, onGetX3, onClose, reward, isNoAdsPurchased
 
       </Animated.View>
 
-      {/* ADS Banner at the bottom of the overlay */}
-      {!isNoAdsPurchased && !(typeof window !== 'undefined' && (window as any).__autoTestActive) && (
+      {/* ADS Banner at the bottom of the overlay (AdMob Removed) */}
+      {/* {!isNoAdsPurchased && !(typeof window !== 'undefined' && (window as any).__autoTestActive) && (
         <View style={styles.adsPlaceholder}>
           <BannerAd
-            unitId={AdMobConfig.bannerAdUnitId}
             size={BannerAdSize.LARGE_BANNER}
             requestOptions={{
               requestNonPersonalizedAdsOnly: true,
             }}
           />
         </View>
-      )}
+      )} */}
     </View>
   );
 }
