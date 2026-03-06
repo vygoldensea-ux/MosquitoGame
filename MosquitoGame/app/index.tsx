@@ -315,6 +315,12 @@ export default function App() {
       return;
     }
 
+    // Skip if unitId is not configured (no test IDs allowed in repo)
+    if (!AD_UNIT_IDS.interstitial) {
+      onFinished();
+      return;
+    }
+
     try {
       // Create interstitial ad
       const interstitial = InterstitialAd.createForAdRequest(AD_UNIT_IDS.interstitial);
@@ -369,6 +375,12 @@ export default function App() {
       console.log('🧪 Test: Skip rewarded, give reward');
       setHearts(prev => Math.min(MAX_HEARTS, prev + 1));
       onSuccess();
+      return;
+    }
+
+    // Skip if unitId is not configured (no test IDs allowed in repo)
+    if (!AD_UNIT_IDS.rewarded) {
+      Alert.alert('Ad Not Available', 'Please try again later');
       return;
     }
 

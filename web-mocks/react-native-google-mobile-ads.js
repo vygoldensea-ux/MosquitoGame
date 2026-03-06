@@ -43,13 +43,13 @@ module.exports = {
         WIDE_SKYSCRAPER: 'WIDE_SKYSCRAPER',
     },
 
-    // Test IDs
+    // IDs (kept for API compatibility on web)
     TestIds: {
-        BANNER: 'test-banner',
-        INTERSTITIAL: 'test-interstitial',
-        REWARDED: 'test-rewarded',
-        REWARDED_INTERSTITIAL: 'test-rewarded-interstitial',
-        APP_OPEN: 'test-app-open',
+        BANNER: 'ca-app-pub-3600965442508079/6939557524',
+        INTERSTITIAL: '',
+        REWARDED: '',
+        REWARDED_INTERSTITIAL: '',
+        APP_OPEN: '',
     },
 
     // Ad event types
