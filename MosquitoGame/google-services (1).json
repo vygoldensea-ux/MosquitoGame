@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "301735294694",
+    "project_id": "mostique",
+    "storage_bucket": "mostique.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301735294694:android:8d33bb8b5fcaed7ce22d27",
+        "android_client_info": {
+          "package_name": "com.anonymous.MosquitoGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa94wfo9g4z1hs1NRF3jzwY0dd-YE3B9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
