@@ -255,7 +255,8 @@ export default function App() {
     try {
       // Start purchase flow
       console.log(`Simulating purchase for native pass-through: ${productId}`);
-      // Purchase listener will handle completion
+      // Mock completion path until native purchase listener is wired.
+      await handlePurchaseSuccess({ productId });
     } catch (error: any) {
       console.error('Purchase error:', error);
 
@@ -1948,13 +1949,14 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
   };
 
   const handleWatchAd = () => {
-    // Giả lập xem ads xong được +1 tim và chơi tiếp
-    addHeart();
-    setTimeLeft(30);
-    setIsFailed(false);
-    setMosquitos([]);
-    setKills(0);
-    totalSpawnedRef.current = 0;
+    showRewardedAd(() => {
+      addHeart();
+      setTimeLeft(30);
+      setIsFailed(false);
+      setMosquitos([]);
+      setKills(0);
+      totalSpawnedRef.current = 0;
+    });
   };
 
   useEffect(() => {
@@ -2055,13 +2057,20 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
     });
 
   const executeItemEffect = (itemName: string) => {
+    // Inventory keys are prefixed (e.g. "item-racket"), normalize to effect keys.
+    const normalizedItem =
+      itemName === 'item-racket' ? 'racket' :
+        itemName === 'item-coil' ? 'coil' :
+          itemName === 'item-spray' ? 'spray' :
+            itemName;
+
     const calcGold = (m: MosquitoData) => {
       if (m.type === 'fat' || m.type === 'thief') return 3;
       if (m.type === 'tanker' || m.type === 'bone') return 5;
       return 1;
     };
 
-    if (itemName === 'spray') {
+    if (normalizedItem === 'spray') {
       let totalGold = 0;
       mosquitos.forEach(m => { totalGold += calcGold(m); });
       if (totalGold > 0) {
@@ -2078,7 +2087,7 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
         triggerVibration('success');
         playSound('electric');
       }
-    } else if (itemName === 'coil') {
+    } else if (normalizedItem === 'coil') {
       if (mosquitos.length <= 5) {
         let totalGold = 0;
         mosquitos.forEach(m => { totalGold += calcGold(m); });
@@ -2113,7 +2122,7 @@ function GameScreen({ hearts, decreaseHeart, addHeart, onBack, globalGold, updat
         setMosquitos(remaining);
         triggerVibration('success');
       }
-    } else if (itemName === 'racket') {
+    } else if (normalizedItem === 'racket') {
       setIsRacketActive(true);
       setRacketSecondsLeft(4); // Start 4-second countdown
     }
